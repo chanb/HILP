@@ -54,7 +54,7 @@ module load StdEnv/2023
 module load python/3.10.13
 module load cuda/12.9
 
-cd /home/chanb/research/unsupervised_rl/HILP/hilp_zsrl
+cd /home/chanb/scratch/code/unsupervised_rl/HILP/hilp_zsrl
 source .venv/bin/activate
 
 # Download dataset
