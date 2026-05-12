@@ -2,6 +2,7 @@
 ```
 module load StdEnv/2023
 module load python/3.10.13
+module load cuda/12.9
 
 uv venv
 uv pip install -r requirements.txt
@@ -43,7 +44,26 @@ You can download a dataset by running `./download.sh <BASE_PATH> <DOMAIN> <ALGO>
 ./download.sh /home/username/scratch/datasets/exorl point_mass_maze proto
 ```
 The script will download the dataset from S3 and store it under `/home/username/scratch/datasets/exorl/walker/proto/`, where you can find episodes (under `buffer`) and episode videos (under `video`).
-Then, run
-```sh
-python hilp_zsrl/convert.py --env point_mass_maze --task reach_bottom_right --method proto --save_path /home/username/scratch/datasets/exorl
+
+
+## Interactive
+```
+salloc --time=02:00:00 --mem=50GB --cpus-per-task=2 --gres=gpu:1 --account=aip-schuurma 
+
+module load StdEnv/2023
+module load python/3.10.13
+module load cuda/12.9
+
+cd /home/chanb/research/unsupervised_rl/HILP/hilp_zsrl
+source .venv/bin/activate
+
+# Download dataset
+../vulcan/download.sh /home/chanb/scratch/datasets/unsupervised_rl point_mass_maze proto
+
+# Generate dataset
+python convert.py --env point_mass_maze --task reach_bottom_right --method proto --save_path /home/chanb/scratch/datasets/unsupervised_rl
+
+# Run offline training
+PYTHONPATH=. python url_benchmark/train_offline.py run_group=EXP device=cuda agent=fb_ddpg agent.q_loss=False seed=0 task=walker_run expl_agent=proto load_replay_buffer=/home/chanb/scratch/datasets/unsupervised_rl/datasets/point_mass_maze/proto/replay.pt replay_buffer_episodes=5000 use_wandb=False use_tb=True
+
 ```

@@ -1,12 +1,12 @@
-numpy
-torch
+numpy==1.26.4
+torch==2.3.0
 torchvision
 hydra-core
 hydra-submitit-launcher
 scikit-learn
 pandas
 matplotlib
-moviepy
+moviepy==1.0.3
 mujoco_py
 dm-control==1.0.8
 wandb
