@@ -111,6 +111,7 @@ class FBDDPGAgent:
             self.backward_net = BackwardMap(self.obs_dim, cfg.z_dim, cfg.backward_hidden_dim, norm_z=cfg.norm_z).to(cfg.device)
             self.backward_target_net = BackwardMap(self.obs_dim,
                                                    cfg.z_dim, cfg.backward_hidden_dim, norm_z=cfg.norm_z).to(cfg.device)
+
         # build up the target network
         self.forward_target_net = ForwardMap(self.obs_dim, cfg.z_dim, self.action_dim,
                                              cfg.feature_dim, cfg.hidden_dim,

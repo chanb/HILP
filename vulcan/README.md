@@ -9,6 +9,9 @@ uv pip install -r requirements.txt
 source .venv/bin/activate
 ```
 
+### Wandb
+See [here](https://docs.alliancecan.ca/wiki/Weights_%26_Biases_(wandb)).
+
 ## Datasets
 Download [exorl](https://github.com/denisyarats/exorl) datasets.
 Below is the content from the repository:
@@ -48,7 +51,7 @@ The script will download the dataset from S3 and store it under `/home/username/
 
 ## Interactive
 ```
-salloc --time=02:00:00 --mem=50GB --cpus-per-task=2 --gres=gpu:1 --account=aip-schuurma 
+salloc --time=02:00:00 --mem=50GB --cpus-per-task=2 --gres=gpu:1 --account=aip-schuurma
 
 module load StdEnv/2023
 module load python/3.10.13
@@ -64,6 +67,6 @@ source .venv/bin/activate
 python convert.py --env point_mass_maze --task reach_bottom_right --method proto --save_path /home/chanb/scratch/datasets/unsupervised_rl
 
 # Run offline training
-PYTHONPATH=. python url_benchmark/train_offline.py run_group=EXP device=cuda agent=fb_ddpg agent.q_loss=False seed=0 task=walker_run expl_agent=proto load_replay_buffer=/home/chanb/scratch/datasets/unsupervised_rl/datasets/point_mass_maze/proto/replay.pt replay_buffer_episodes=5000 use_wandb=False use_tb=True
+PYTHONPATH=. python url_benchmark/train_offline.py run_group=EXP device=cuda agent=fb_ddpg agent.q_loss=False seed=0 task=point_mass_maze_reach_bottom_right expl_agent=proto load_replay_buffer=/home/chanb/scratch/datasets/unsupervised_rl/datasets/point_mass_maze/proto/replay.pt replay_buffer_episodes=5000 use_wandb=False use_tb=True
 
 ```
